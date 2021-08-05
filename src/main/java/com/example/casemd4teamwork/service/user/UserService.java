@@ -5,6 +5,8 @@ import com.example.casemd4teamwork.model.UserPrinciple;
 import com.example.casemd4teamwork.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,6 +43,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public Page<User> findAll(Pageable pageable) {
+        return null;
+    }
+
+    @Override
     public Optional<User> findByUserName(String username) {
         return userRepository.findByUsername(username);
     }
@@ -52,5 +59,10 @@ public class UserService implements IUserService {
             throw new UsernameNotFoundException(username);
         }
         return UserPrinciple.build(userOptional.get());
+    }
+
+    @Override
+    public Page<User> findAllByFirstNameContaining(String username, Pageable pageable) {
+        return userRepository.findAllByFirstNameContaining(username, pageable);
     }
 }

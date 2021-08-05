@@ -1,8 +1,11 @@
 package com.example.casemd4teamwork.service.image;
 
 import com.example.casemd4teamwork.model.Image;
+import com.example.casemd4teamwork.model.User;
 import com.example.casemd4teamwork.repository.IImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -31,5 +34,10 @@ public class ImageService implements IImageService{
     public void remove(Long id) {
         imageRepository.deleteById(id);
 
+    }
+
+    @Override
+    public Page<User> findAll(Pageable pageable) {
+        return null;
     }
 }

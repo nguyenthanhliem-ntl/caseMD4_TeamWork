@@ -1,8 +1,11 @@
 package com.example.casemd4teamwork.service.role;
 
 import com.example.casemd4teamwork.model.Role;
+import com.example.casemd4teamwork.model.User;
 import com.example.casemd4teamwork.repository.IRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
@@ -28,6 +31,11 @@ public class RoleService implements IRoleService {
     @Override
     public void remove(Long id) {
         roleRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<User> findAll(Pageable pageable) {
+        return null;
     }
 
     @Override
