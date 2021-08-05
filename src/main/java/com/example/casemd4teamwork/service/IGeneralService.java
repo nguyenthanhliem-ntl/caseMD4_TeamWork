@@ -1,5 +1,6 @@
 package com.example.casemd4teamwork.service;
 
+
 import java.util.Optional;
 
 public interface IGeneralService <T>{
