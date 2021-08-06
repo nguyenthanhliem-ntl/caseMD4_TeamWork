@@ -66,8 +66,8 @@ public class AuthController {
         SimpleMailMessage message = new SimpleMailMessage();
 
         message.setTo(email);
-        message.setSubject("Test Simple Email");
-        message.setText("Hello, Im testing Simple Email");
+        message.setSubject(" Email Success");
+        message.setText("Đăng kí thành công");
 
         // Send Message!
         this.javaMailSender.send(message);
