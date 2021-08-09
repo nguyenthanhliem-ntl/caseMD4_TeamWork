@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/user")
 @CrossOrigin("*")
 public class UserController {
     @Autowired
@@ -34,4 +34,5 @@ public class UserController {
         userService.save(user);
         return new ResponseEntity<>(userService.findById(user.getId()).get(), HttpStatus.OK);
     }
+
 }

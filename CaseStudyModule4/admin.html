@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+            crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        function showListUser() {
+            $.ajax({
+                type: "GET",
+                contentType: "application/json",
+                url: "http://localhost:8080/admin",
+                success: function (listUser) {
+                    let str = "<h1 style='margin-left: 40%'>List Account</h1>" +
+                        "<table class='table table-dark table-striped'>\n" + "<tr>\n" +
+                        "<th>Full Name</th>\n" +
+                        "<th>UserName</th>\n" +
+                        "<th>Password</th>\n" +
+                        "<th>Email</th>\n" +
+                        "<th>Phone Number</th>\n" +
+                        "<th>Address</th>\n" +
+                        "<th>Delete</th>\n" +
+                        "</tr>\n";
+                    for (let i = 0; i < listUser.length; i++) {
+                        str += "<tr><td>" + listUser[i].fullName;
+                        str += "</td><td>" + listUser[i].username;
+                        str += "</td><td> **********";
+                        str += "</td><td>" + listUser[i].email;
+                        str += "</td><td>" + listUser[i].phoneNumber;
+                        str += "</td><td>" + listUser[i].address;
+                        str += "</td><td>" + ' <button   type="button" onclick="showUserForm(' + listUser[i].id + ')"> View</button> ';
+                        str += "</td>"
+                    }
+                    str += "</table>"
+                    document.getElementById("showAll").innerHTML = str;
+                }
+            })
+        }
+
+
+        function showUserForm(id) {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/admin/user/" + id,
+                success: function (user) {
+                    let fullName = user.fullName;
+                    let username = user.username;
+                    let password = user.password;
+                    let email = user.email;
+                    let phoneNumber = user.phoneNumber;
+                    let address = user.address;
+                    let str ="<h3 style='margin-left: 40%'>User</h3>"+
+                        `<input type="hidden" id="deleteId" value="${id}"><table class='table table-dark table-striped'>
+                            <tr>
+                                <td>Full Name:</td>
+                                <td><input type="text" id="edit-name" value=${fullName}></td>
+                           </tr>
+                           <tr>
+                               <td>User Name</td>
+                               <td><input type="text" id="edit-price" value="${username}"></td>
+                            </tr>
+                           <tr>
+                            <tr>
+                               <td>Password</td>
+                               <td>
+                                    <input type="text" id="edit-quantity" value="*********">
+                                    <button onclick="showFormPassword()">Thay đổi mật khẩu</button>
+                               </td>
+
+                            </tr>
+                           <tr> <tr>
+                               <td>Email</td>
+                               <td><input type="text" id="edit-color" value="${email}"></td>
+                            </tr>
+                           <tr> <tr>
+                               <td>Phone Number</td>
+                               <td><input type="text" id="edit-description" value="${phoneNumber}"></td>
+                            </tr>
+                           <tr> <tr>
+                               <td>Address</td>
+                               <td><input type="text" id="category" value="${address}"></td>
+                            </tr>
+                           <tr>
+                                <td></td>
+                               <td><button type="button" id="save" onclick="deleteUser()" >Delete</td>
+                           </tr>
+                       </table>`;
+                    document.getElementById("user").innerHTML = str;
+
+                }
+            });
+            event.preventDefault();
+        }
+
+        function showCreateForm() {
+            window.location.href = "index.html";
+        }
+
+        function deleteUser() {
+            let id = document.getElementById("deleteId").value;
+            let user = {
+                id: id,
+            }
+            if (confirm("Bạn có chắc chắn xóa ?")==true){
+                $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json'
+                    },
+                    type: "DELETE",
+                    data: JSON.stringify(user),
+                    url: "http://localhost:8080/admin/user/" + id,
+                    success: function (){
+                        showListUser();
+                        document.getElementById("user").innerHTML="";
+                    }
+                })
+                event.preventDefault();
+            }
+        }
+
+        function showFormPassword() {
+
+        }
+
+    </script>
+</head>
+<body onload="showListUser()">
+<div id="showAll"></div>
+<div id="user" ></div>
+</body>
+</html>
