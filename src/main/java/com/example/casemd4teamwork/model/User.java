@@ -12,16 +12,16 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "không được để trống!")
-    @Size(min = 2, max = 30, message = "độ dài ít nhất là 2 và không vượt quá 30 kí tự")
-    @Column(unique = true, nullable = false)
+//    @NotEmpty(message = "không được để trống!")
+//    @Size(min = 2, max = 30, message = "độ dài ít nhất là 2 và không vượt quá 30 kí tự")
+//    @Column(unique = true, nullable = false)
     private String username;
     private String password;
-    @Column(nullable = false)
-    @NotEmpty(message = "Thiếu địa chỉ")
+//    @Column(nullable = false)
+//    @NotEmpty(message = "Thiếu địa chỉ")
     private String address;
-    @Column(nullable = false)
-    @NotEmpty(message = "Sai số điện thoại")
+//    @Column(nullable = false)
+//    @NotEmpty(message = "Sai số điện thoại")
     private String phoneNumber;
     private String fullName;
     private String email;
