@@ -40,7 +40,7 @@ public class ImageController {
 //        return new ResponseEntity<>(images, HttpStatus.OK);
 //    }
 
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "/image")
     public String homePage() {
 
         return "index";
