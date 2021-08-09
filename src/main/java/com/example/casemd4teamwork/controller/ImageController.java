@@ -66,4 +66,16 @@ public class ImageController {
         imageService.remove(id);
         return new ResponseEntity<>(image.get(), HttpStatus.NO_CONTENT);
     }
+    @GetMapping("/search/{value}")
+    public ResponseEntity<Iterable<Image>> findByAllAdress(@PathVariable String value) {
+        return new ResponseEntity<>(imageService.findAllByImageAddress("%" + value + "%"), HttpStatus.OK);
+    }
+    @GetMapping("/find/{price1},{price2}")
+    public ResponseEntity<Iterable<Image>> findAllByPrice(@PathVariable Long price1, @PathVariable Long price2) {
+        return new ResponseEntity<>(imageService.findAllByImagePrice(price1, price2), HttpStatus.OK);
+    }
+    @GetMapping("/tim/{price1},{price2},{address},{num_Bedroom},{num_Bathroom}")
+    public ResponseEntity<Iterable<Image>> findAllByHome(@PathVariable Long price1, @PathVariable Long price2, @PathVariable String address, @PathVariable int num_Bedroom, @PathVariable int num_Bathroom) {
+        return new ResponseEntity<>(imageService.findByImageHome(price1, price2,"%" + address + "%", num_Bedroom, num_Bathroom), HttpStatus.OK);
+    }
 }

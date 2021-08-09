@@ -56,20 +56,20 @@ public class MainRESTController {
         }
         return sb.toString();
     }
-
-    @PostMapping("/rest/upload")
-    public ResponseEntity<?> multiUploadFileModel2(Form form) {
-        Image image1 = new Image();
-       // image1.setHome(form.getHome());
-        image1.setImage(form.getFile().getOriginalFilename());
-        MultipartFile image = form.getFile();
-        String fileName = image.getOriginalFilename();
-        try {
-            FileCopyUtils.copy(image.getBytes(),
-                    new File(UPLOAD_DIR + fileName)); // coppy ảnh từ ảnh nhận được vào thư mục quy định,
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>(image1, HttpStatus.OK);
-    }
+//
+//    @PostMapping("/rest/upload")
+//    public ResponseEntity<?> multiUploadFileModel2(Form form) {
+//        Image image1 = new Image();
+//       // image1.setHome(form.getHome());
+//        image1.setImage(form.getFile().getOriginalFilename());
+//        MultipartFile image = form.getFile();
+//        String fileName = image.getOriginalFilename();
+//        try {
+//            FileCopyUtils.copy(image.getBytes(),
+//                    new File(UPLOAD_DIR + fileName)); // coppy ảnh từ ảnh nhận được vào thư mục quy định,
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//        return new ResponseEntity<>(image1, HttpStatus.OK);
+//    }
 }
