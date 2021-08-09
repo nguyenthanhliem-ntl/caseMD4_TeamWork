@@ -1,5 +1,6 @@
 package com.example.casemd4teamwork.controller;
 
+import com.example.casemd4teamwork.model.Home;
 import com.example.casemd4teamwork.model.JwtResponse;
 import com.example.casemd4teamwork.model.User;
 import com.example.casemd4teamwork.service.jwt.JwtService;
@@ -22,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin("*")
-public class AuthController {
+public class LoginController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -34,12 +35,6 @@ public class AuthController {
 
     @Autowired
     JavaMailSender javaMailSender;
-
-    @GetMapping("")
-    public ResponseEntity<Iterable<User>> showListUser() {
-        List<User> users = (List<User>) userService.findAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
-    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
@@ -53,7 +48,6 @@ public class AuthController {
         User currentUser = userService.findByUserName(user.getUsername()).get();
         return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), currentUser.getFullName(), userDetails.getAuthorities()));
     }
-
     @GetMapping("/register")
     public ResponseEntity<User> registerAccount(@RequestBody @Valid User user) {
         userService.save(user);
@@ -68,10 +62,17 @@ public class AuthController {
         message.setTo(email);
         message.setSubject(" Email Success");
         message.setText("Đăng kí thành công");
-
         // Send Message!
         this.javaMailSender.send(message);
 
         return new ResponseEntity<>(message,HttpStatus.OK);
     }
+
+//    @GetMapping("/home")
+//    public ResponseEntity<Iterable<Home>> showListUser() {
+//        List<Home> homes = (List<Home>) homeService.findAll();
+//        return new ResponseEntity<>(homes, HttpStatus.OK);
+//    }
+
+
 }
