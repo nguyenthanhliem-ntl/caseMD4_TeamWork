@@ -71,7 +71,7 @@ public class ImageController {
         Image image = new Image();
         model.addAttribute("image", image);
 
-        return "/image/uploadMutilFile";
+        return "uploadMutilFile";
     }
 
     @PostMapping(value = "/uploadMutilFile")
@@ -89,10 +89,12 @@ public class ImageController {
         String description = image.getDescription();
         System.out.println("Description: " + description);
 
-
+// Thư mục gốc upload file.
         String uploadRootPath = request.getServletContext().getRealPath("upload");
         System.out.println("uploadRootPath=" + uploadRootPath);
 
+
+        // Tạo thư mục gốc upload nếu nó không tồn tại.
         File uploadRootDir = new File(uploadRootPath);
         if (!uploadRootDir.exists()) {
             uploadRootDir.mkdirs();
@@ -102,7 +104,7 @@ public class ImageController {
         List<String> failedFiles = new ArrayList<String>();
 
         for (MultipartFile fileData : files) {
-
+// Tên file gốc tại Client.
             String name = fileData.getOriginalFilename();
             System.out.println("Client File Name = " + name);
 
