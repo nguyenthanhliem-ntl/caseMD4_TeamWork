@@ -1,7 +1,12 @@
 package com.example.casemd4teamwork.model;
 
+
+
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 
+@SuppressWarnings("JpaAttributeTypeInspection")
 @Entity
 @Table(name = "image")
 public class Image {
@@ -9,7 +14,9 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String image;
+    private String description;
+
+    private MultipartFile[] files;
 
     @ManyToOne(targetEntity = Home.class)
     @JoinColumn(name = "home_id")
@@ -18,8 +25,10 @@ public class Image {
     public Image() {
     }
 
-    public Image(String image, Home home) {
-        this.image = image;
+    public Image(Long id, String description, MultipartFile[] files, Home home) {
+        this.id = id;
+        this.description = description;
+        this.files = files;
         this.home = home;
     }
 
@@ -31,12 +40,20 @@ public class Image {
         this.id = id;
     }
 
-    public String getImage() {
-        return image;
+    public String getDescription() {
+        return description;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public MultipartFile[] getFiles() {
+        return files;
+    }
+
+    public void setFiles(MultipartFile[] files) {
+        this.files = files;
     }
 
     public Home getHome() {

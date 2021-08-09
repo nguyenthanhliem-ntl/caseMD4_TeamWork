@@ -13,6 +13,8 @@ public class Home {
 
     private String type_Room;
 
+    private boolean status;
+
     private String type_Home;
 
     private String address;

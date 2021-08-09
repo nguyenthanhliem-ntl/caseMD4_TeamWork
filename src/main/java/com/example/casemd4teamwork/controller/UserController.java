@@ -80,16 +80,16 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("/users")
-    public ModelAndView listUsers(@RequestParam("user") Optional<String> s, Pageable pageable){
-        Page<User> users;
-        if(s.isPresent()){
-            users = userService.findAllByFirstNameContaining(s.get(), pageable);
-        } else {
-            users = userService.findAll(pageable);
-        }
-        ModelAndView modelAndView = new ModelAndView("/user/list");
-        modelAndView.addObject("user", users);
-        return modelAndView;
-    }
+//    @GetMapping("/users")
+//    public ModelAndView listUsers(@RequestParam("user") Optional<String> s, Pageable pageable){
+//        Page<User> users;
+//        if(s.isPresent()){
+//            users = userService.findAllByFirstNameContaining(s.get(), pageable);
+//        } else {
+//            users = userService.findAll(pageable);
+//        }
+//        ModelAndView modelAndView = new ModelAndView("/user/list");
+//        modelAndView.addObject("user", users);
+//        return modelAndView;
+//    }
 }

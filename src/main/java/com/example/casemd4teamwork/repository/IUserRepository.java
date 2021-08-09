@@ -13,6 +13,6 @@ import java.util.Optional;
 @Repository
 public interface IUserRepository extends PagingAndSortingRepository<User,Long> {
     Optional<User> findByUsername(String username);
-    Page<User> findAllByFirstNameContaining(String username, Pageable pageable);
+//    Page<User> findAllByFirstNameContaining(String username, Pageable pageable);
 
 }

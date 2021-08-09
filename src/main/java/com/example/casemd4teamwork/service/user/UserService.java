@@ -61,8 +61,8 @@ public class UserService implements IUserService {
         return UserPrinciple.build(userOptional.get());
     }
 
-    @Override
-    public Page<User> findAllByFirstNameContaining(String username, Pageable pageable) {
-        return userRepository.findAllByFirstNameContaining(username, pageable);
-    }
+//    @Override
+//    public Page<User> findAllByFirstNameContaining(String username, Pageable pageable) {
+//        return userRepository.findAllByFirstNameContaining(username, pageable);
+//    }
 }
