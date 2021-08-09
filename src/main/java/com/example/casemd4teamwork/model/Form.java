@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Form {
 
-    private Long id;
+
     private MultipartFile image;
 
     private Home home;
@@ -17,13 +17,7 @@ public class Form {
         this.home = home;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public MultipartFile getImage() {
         return image;

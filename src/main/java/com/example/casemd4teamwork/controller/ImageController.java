@@ -1,5 +1,6 @@
 package com.example.casemd4teamwork.controller;
 
+import com.example.casemd4teamwork.model.Form;
 import com.example.casemd4teamwork.model.Home;
 import com.example.casemd4teamwork.model.Image;
 import com.example.casemd4teamwork.service.home.IHomeService;
@@ -8,8 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,10 +39,26 @@ public class ImageController {
         }
         return new ResponseEntity<>(images, HttpStatus.OK);
     }
-    @PostMapping
-    public ResponseEntity<Void> create(@RequestBody Image image) {
-        imageService.save(image);
-        return new ResponseEntity(HttpStatus.CREATED);
+//    @PostMapping
+//    public ResponseEntity<Void> create(@RequestBody Image image) {
+//        imageService.save(image);
+//        return new ResponseEntity(HttpStatus.CREATED);
+//    }
+    @PostMapping("/rest/upload")
+    public ResponseEntity<?> multiUploadFileModel2(Form form) {
+        Image image1 = new Image();
+        image1.setHome(form.getHome());
+        image1.setImage(form.getImage().getOriginalFilename());
+        MultipartFile image = form.getImage();
+        String fileName = image.getOriginalFilename();
+        try {
+            FileCopyUtils.copy(image.getBytes(),
+                    new File(UPLOAD_DIR + fileName)); // coppy ảnh từ ảnh nhận được vào thư mục quy định,
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        imageService.save(image1);
+        return new ResponseEntity<>(image1, HttpStatus.CREATED);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Image> findById(@PathVariable Long id){
