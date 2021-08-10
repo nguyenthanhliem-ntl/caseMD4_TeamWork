@@ -3,9 +3,11 @@ package com.example.casemd4teamwork.service.home_time;
 import com.example.casemd4teamwork.model.Home_Time;
 import com.example.casemd4teamwork.repository.IHome_TimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class Home_TimeService implements IHome_TimeService{
     @Autowired
     private IHome_TimeRepository iHome_timeRepository;

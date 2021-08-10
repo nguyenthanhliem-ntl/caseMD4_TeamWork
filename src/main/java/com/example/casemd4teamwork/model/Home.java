@@ -25,6 +25,7 @@ public class Home {
 
     private Long price;
 
+
     public Home() {
     }
 
