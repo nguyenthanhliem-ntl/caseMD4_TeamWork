@@ -122,4 +122,5 @@ public class Home {
     public void setPrice(Long price) {
         this.price = price;
     }
+    //avcgit
 }
