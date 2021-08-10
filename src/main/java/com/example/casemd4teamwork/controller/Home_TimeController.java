@@ -34,11 +34,7 @@ public class Home_TimeController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Home_Time> findById(@PathVariable Long id){
-        Optional<Home_Time> home_timeOptional = home_timeService.findById(id);
-        if (!home_timeOptional.isPresent()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(home_timeOptional.get(), HttpStatus.OK);
+    public ResponseEntity<Iterable<Home_Time>> findAllTimeByHomeId(@PathVariable Long id) {
+        return new ResponseEntity<>(home_timeService.findAllTimeByHomeId(id), HttpStatus.OK);
     }
 }
