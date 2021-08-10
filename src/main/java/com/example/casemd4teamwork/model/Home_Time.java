@@ -10,14 +10,14 @@ public class Home_Time {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     private Home home;
 
     private LocalDateTime first_time;
 
     private LocalDateTime last_time;
 
-    @OneToOne
+    @ManyToOne
     private Status status;
 
     public Home_Time() {
