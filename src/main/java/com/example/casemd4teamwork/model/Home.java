@@ -1,6 +1,7 @@
 package com.example.casemd4teamwork.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "home")
@@ -12,8 +13,6 @@ public class Home {
     private String home_Name;
 
     private String type_Room;
-
-    private boolean status;
 
     private String type_Home;
 
@@ -29,6 +28,34 @@ public class Home {
 
     public Home() {
     }
+
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private Status status;
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Home(Long id, String home_Name, String type_Room, String type_Home, String address, int num_Bedroom, int num_Bathroom, String description, Long price, Status status) {
+        this.id = id;
+        this.home_Name = home_Name;
+        this.type_Room = type_Room;
+        this.type_Home = type_Home;
+        this.address = address;
+        this.num_Bedroom = num_Bedroom;
+        this.num_Bathroom = num_Bathroom;
+        this.description = description;
+        this.price = price;
+        this.status = status;
+    }
+
+
+
 
     public Home(Long id, String home_Name, String type_Room, String type_Home, String address, int num_Bedroom, int num_Bathroom, String description, Long price) {
         this.id = id;

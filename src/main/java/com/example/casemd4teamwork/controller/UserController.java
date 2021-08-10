@@ -12,8 +12,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Optional;
-@RestController
-@RequestMapping("/api/user")
+//@RestController
+//<<<<<<< HEAD
+//@RequestMapping("/api/user")
+//=======
+@RequestMapping("/user")
+@CrossOrigin("*")
+//>>>>>>> b2cb4885c7106ce6d2a9c21a2781ae57d9b9248e
 public class UserController {
     @Autowired
     private IUserService userService;
@@ -175,4 +180,5 @@ public ResponseEntity<Iterable<User>> findAllUser() {
         userService.remove(id);
         return new ResponseEntity<>(customerOptional.get(), HttpStatus.NO_CONTENT);
     }
+
 }

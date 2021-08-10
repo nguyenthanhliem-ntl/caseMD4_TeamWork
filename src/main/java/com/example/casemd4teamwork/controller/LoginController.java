@@ -48,10 +48,9 @@ public class LoginController {
         User currentUser = userService.findByUserName(user.getUsername()).get();
         return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), currentUser.getFullName(), userDetails.getAuthorities()));
     }
-    @GetMapping("/register")
-    public ResponseEntity<User> registerAccount(@RequestBody @Valid User user) {
-        userService.save(user);
-        return new ResponseEntity<>(userService.findById(user.getId()).get(),HttpStatus.OK);
+    @PostMapping("/register")
+    private ResponseEntity<User> createUser(@RequestBody User user){
+        return new ResponseEntity<>(userService.save(user),HttpStatus.CREATED);
     }
     @PostMapping("/sendEmail/{email}") //gửi email
     public ResponseEntity<SimpleMailMessage> sendSimpleEmail(@PathVariable String email) {

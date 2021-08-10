@@ -31,7 +31,7 @@ public class AdminController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/user/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable Long id) {
         Optional<User> customer = userService.findById(id);
         if (!customer.isPresent()) {
@@ -39,6 +39,14 @@ public class AdminController {
         }
         userService.remove(id);
         return new ResponseEntity<>( HttpStatus.NO_CONTENT);
+    }
+    @GetMapping("/user/{id}")
+    public ResponseEntity<Optional<User>> findUserById(@PathVariable Long id){
+        Optional<User> customer = userService.findById(id);
+        if (!customer.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(customer,HttpStatus.OK);
     }
 
 }
