@@ -30,4 +30,9 @@ public class Home_TimeService implements IHome_TimeService{
     public void remove(Long id) {
         iHome_timeRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<Home_Time> findAllTimeByHomeId(Long id) {
+        return iHome_timeRepository.findAllTimeByHomeId(id);
+    }
 }
