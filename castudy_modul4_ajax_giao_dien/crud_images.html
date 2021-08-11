@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Images</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="js/house.js"></script>
+
+</head>
+<body onload="findAll()">
+<div class="container">
+
+    <div class="row">
+        <div class="col-4">
+            <div id="create">
+                <button class="btn btn-success" onclick="showFormCreate()" type="button">AddNewImage</button>
+            </div>
+
+        </div>
+        <div class="col-4">
+            <button class="btn btn-primary" type="button" onclick="searchHomeByAddress()">Search</button>
+            <input id="addressSearch" type="text" value="address"></div>
+        <div class="col-4"><button class="btn btn-primary" onclick="findAll()">HOME</button></div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-primary" type="button" onclick="searchHomeByPrice()">SearchByPrice</button>
+            <input id="addpriceSearch1" type="text" value="pricemin">
+            <input id="addpriceSearch2" type="text" value="pricemax">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-primary" type="button" onclick="searchAllHome()">SearchHome</button>
+            <input id="pricemin" type="text" value="pricemin">
+            <input id="pricemax" type="text" value="pricemax">
+            <input id="address" type="text" value="address">
+            <input id="num_bedroom" type="text" value="num_bedroom">
+            <input id="num_bathroom" type="text" value="num_bathrooom">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div id="main"></div>
+        </div>
+    </div>
+    <div class="row"></div>
+</div>
+</body>
+</html>

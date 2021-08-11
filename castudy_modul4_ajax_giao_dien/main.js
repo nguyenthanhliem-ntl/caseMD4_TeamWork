@@ -93,7 +93,7 @@ function loadListImage() {
                 // for (let j = 0; j < nhuanh[i].roles.length; j++) {
                 //     str += `<p id="role">${nhuanh[i].roles[j].name}</p>`;
                 // }
-                str += `<a href="#" class="btn btn-primary">View</a>
+                str += `<a href="detail_house.html" class="btn btn-primary" id="view">View</a>
                                 </div>
                             </div>
                         </div>`

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+    function loaddetail() {
+        let view = $('#view');
+        let id = view.val();
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8011/api/images/" + 31,
+            success: function (chien) {
+                document.getElementById('post').innerHTML = `<img height="100" width="100" src="image/${chien.image}" ${chien.home.home_Name} ${chien.home.type_Home} ${chien.home.type_Room} ${chien.home.address} ${chien.home.num_Bedroom} ${chien.home.num_Bathroom} ${chien.home.description} ${chien.home.price}`;
+            },
+            error: function (tien) {
+                console.log(tien);
+            }
+        });
+    }
+    </script>
+</head>
+<body onload="loaddetail">
+<div>
+
+</div>
+<div id="post"></div>
+</body>
+</html>
