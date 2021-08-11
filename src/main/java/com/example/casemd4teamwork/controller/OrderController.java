@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,14 +40,23 @@ public class OrderController {
         }
         return new ResponseEntity<>(optionalOrder.get(), HttpStatus.OK);
     }
-
+    private long oneDay = 86400000;
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Order> delete(@PathVariable Long id){
-        Optional<Order> order = iOrderService.findById(id);
-        if (!order.isPresent()){
+    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+        Optional<Order> orderForm = iOrderService.findById(id);
+        if (orderForm == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        iOrderService.remove(id);
-        return new ResponseEntity<>(order.get(), HttpStatus.NO_CONTENT);
+        Calendar cal = Calendar.getInstance();
+        Date date = cal.getTime();
+        long orderTime = orderForm.get().getStart_date().getTime();
+        long currentTime = date.getTime();
+        long timeDemo = orderTime - currentTime;
+        if (timeDemo > oneDay || timeDemo < 0) {
+            iOrderService.remove(id);
+        } else {
+            return new ResponseEntity<>("Không thể xoá", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity("Thành Công", HttpStatus.OK);
     }
 }
