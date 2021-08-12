@@ -65,9 +65,10 @@ public class HomeController {
     }
     @GetMapping("/find/{price1},{price2}")
     public ResponseEntity<Iterable<Home>> findAllByPrice(@PathVariable Long price1, @PathVariable Long price2) {
-        return new ResponseEntity<>(homeService.findAllByPrice(price1, price2), HttpStatus.OK);
+        List<Home> homes = (List<Home>) homeService.findAllByPrice(price1, price2);
+        return new ResponseEntity<>(homes, HttpStatus.OK);
     }
-    @GetMapping("/tim/{price1},{price2},{address},{num_Bedroom},{num_Bathroom}")
+    @GetMapping("/find/{price1},{price2},{address},{num_Bedroom},{num_Bathroom}")
     public ResponseEntity<Iterable<Home>> findAllByHome(@PathVariable Long price1, @PathVariable Long price2, @PathVariable String address, @PathVariable int num_Bedroom, @PathVariable int num_Bathroom) {
         return new ResponseEntity<>(homeService.findByHome(price1, price2,"%" + address + "%", num_Bedroom, num_Bathroom), HttpStatus.OK);
     }

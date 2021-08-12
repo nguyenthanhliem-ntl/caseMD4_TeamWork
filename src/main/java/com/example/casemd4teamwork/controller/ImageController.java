@@ -23,7 +23,7 @@ import java.util.Optional;
 @PropertySource("classpath:application.properties")
 @CrossOrigin("*")
 public class ImageController {
-    private static String UPLOAD_DIR = "C:\\Users\\Admin\\WebstormProjects\\castudy_modul4_ajax\\image\\";
+    private static String UPLOAD_DIR = "C:\\Users\\ACER PC\\OneDrive\\Desktop\\CaseModule4\\caseMD4_TeamWork\\CaseStudyModule4\\images\\";
 
     @Autowired
     IImageService imageService;
@@ -39,11 +39,7 @@ public class ImageController {
         }
         return new ResponseEntity<>(images, HttpStatus.OK);
     }
-//    @PostMapping
-//    public ResponseEntity<Void> create(@RequestBody Image image) {
-//        imageService.save(image);
-//        return new ResponseEntity(HttpStatus.CREATED);
-//    }
+
     @PostMapping("/rest/upload")
     public ResponseEntity<?> multiUploadFileModel2(Form form) {
         Image image1 = new Image();
@@ -98,5 +94,9 @@ public class ImageController {
     @GetMapping("/tim/{price1},{price2},{address},{num_Bedroom},{num_Bathroom}")
     public ResponseEntity<Iterable<Image>> findAllByHome(@PathVariable Long price1, @PathVariable Long price2, @PathVariable String address, @PathVariable int num_Bedroom, @PathVariable int num_Bathroom) {
         return new ResponseEntity<>(imageService.findByImageHome(price1, price2,"%" + address + "%", num_Bedroom, num_Bathroom), HttpStatus.OK);
+    }
+    @GetMapping("/findAllImage/{id}")
+    public ResponseEntity<Iterable<Image>> findAllImage(@PathVariable Long id){
+        return new ResponseEntity<>(imageService.findAllImageByHomeId(id),HttpStatus.OK);
     }
 }

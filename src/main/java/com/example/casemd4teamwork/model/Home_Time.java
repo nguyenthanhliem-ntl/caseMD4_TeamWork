@@ -2,6 +2,7 @@ package com.example.casemd4teamwork.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "home_time")
@@ -13,9 +14,9 @@ public class Home_Time {
     @ManyToOne
     private Home home;
 
-    private LocalDateTime first_time;
+    private Date first_time;
 
-    private LocalDateTime last_time;
+    private Date last_time;
 
     @ManyToOne
     private Status status;
@@ -23,7 +24,7 @@ public class Home_Time {
     public Home_Time() {
     }
 
-    public Home_Time(Home home, LocalDateTime first_time, LocalDateTime last_time, Status status) {
+    public Home_Time(Home home, Date first_time, Date last_time, Status status) {
         this.home = home;
         this.first_time = first_time;
         this.last_time = last_time;
@@ -46,19 +47,19 @@ public class Home_Time {
         this.home = home;
     }
 
-    public LocalDateTime getFirst_time() {
+    public Date getFirst_time() {
         return first_time;
     }
 
-    public void setFirst_time(LocalDateTime first_time) {
+    public void setFirst_time(Date first_time) {
         this.first_time = first_time;
     }
 
-    public LocalDateTime getLast_time() {
+    public Date getLast_time() {
         return last_time;
     }
 
-    public void setLast_time(LocalDateTime last_time) {
+    public void setLast_time(Date last_time) {
         this.last_time = last_time;
     }
 

@@ -58,6 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic().authenticationEntryPoint(restServicesEntryPoint());
         http.authorizeRequests()
                 .antMatchers("/**").permitAll()
+//                .antMatchers("/order/create").access("hasRole('ROLE_USER')")
 //                .antMatchers("/api/register","/api/sendEmail/{email}","/api/login").permitAll()
 //                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 //                .antMatchers("/user/**").access("hasRole('ROLE_USER')")

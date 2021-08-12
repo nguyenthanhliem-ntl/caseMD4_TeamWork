@@ -49,4 +49,9 @@ public class ImageService implements IImageService{
         return imageRepository.findByImageHome(price1, price2, address, num_Bedroom, num_Bathroom);
     }
 
+    @Override
+    public Iterable<Image> findAllImageByHomeId(Long id) {
+        return imageRepository.findAllImageByHomeId(id);
+    }
+
 }

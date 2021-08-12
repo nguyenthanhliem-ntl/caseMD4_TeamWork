@@ -10,4 +10,6 @@ public interface IImageService extends IGeneralService<Image> {
     Iterable<Image> findAllByImagePrice(Long price1, Long price2);
 
     Iterable<Image> findByImageHome(Long price1, Long price2, String address, int num_Bedroom, int num_Bathroom);
+
+    Iterable<Image> findAllImageByHomeId(Long id);
 }

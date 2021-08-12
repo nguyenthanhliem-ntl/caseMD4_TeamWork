@@ -19,11 +19,11 @@ public class Order {
 
     @ManyToOne
     private Home home;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+
     private Date order_time;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+
     private Date start_date;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+
     private Date end_date;
 
     public Order() {

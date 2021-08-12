@@ -23,13 +23,13 @@
                 username: document.getElementById('your_name').value,
                 password: document.getElementById('your_pass').value,
             }
-            console.log(user);
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
                     url: "http://localhost:8080/api/login",
                     data: JSON.stringify(user),
                     success: function (acc) {
+                        localStorage.setItem("acc",JSON.stringify(acc));
                         if (acc.roles.length < 2) {
                             window.location.href = "home.html"
                         } else {
