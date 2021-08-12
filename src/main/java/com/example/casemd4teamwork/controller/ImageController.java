@@ -19,115 +19,28 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
-//@RestController
-//@RequestMapping("/api/images")
-//@CrossOrigin("*")
+
+@RestController
+@RequestMapping("/api/images")
+@CrossOrigin("*")
 public class ImageController {
 
-//    @Autowired
-//    IImageService imageService;
-//
-//    @Autowired
-//    IHomeService homeService;
-//
-//    @GetMapping
-//    public ResponseEntity<Iterable<Image>> showListImage(){
-//        List<Image> images = (List<Image>) imageService.findAll();
-//        if (images.isEmpty()){
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }
-//        return new ResponseEntity<>(images, HttpStatus.OK);
-//    }
+    @Autowired
+    IImageService imageService;
 
-    @RequestMapping(value = "/image")
-    public String homePage() {
+    @Autowired
+    IHomeService homeService;
 
-        return "index";
-    }
-
-
-
-    @GetMapping(value = "/uploadOneFile")
-    public String uploadOneFileHandler(Model model) {
-
-        Image image = new Image();
-        model.addAttribute("image", image);
-
-        return "image";
-    }
-
-
-    @PostMapping(value = "/uploadOneFile")
-    public String uploadOneFileHandlerPOST(HttpServletRequest request,
-                                           Model model,
-                                           @ModelAttribute("image") Image image) {
-        return this.doUpload(request, model, image);
-    }
-
-    @GetMapping(value = "/uploadMultiFile")
-    public String uploadMultiFileHandler(Model model) {
-
-        Image image = new Image();
-        model.addAttribute("image", image);
-
-        return "uploadMutilFile";
-    }
-
-    @PostMapping(value = "/uploadMutilFile")
-    public String uploadMultiFileHandlerPOST(HttpServletRequest request,
-                                             Model model,
-                                             @ModelAttribute("image") Image image) {
-
-        return this.doUpload(request, model, image);
-
-    }
-
-    private String doUpload(HttpServletRequest request, Model model,
-                            Image image) {
-
-        String description = image.getDescription();
-        System.out.println("Description: " + description);
-
-// Thư mục gốc upload file.
-        String uploadRootPath = request.getServletContext().getRealPath("upload");
-        System.out.println("uploadRootPath=" + uploadRootPath);
-
-
-        // Tạo thư mục gốc upload nếu nó không tồn tại.
-        File uploadRootDir = new File(uploadRootPath);
-        if (!uploadRootDir.exists()) {
-            uploadRootDir.mkdirs();
+    @GetMapping
+    public ResponseEntity<Iterable<Image>> showListImage(){
+        List<Image> images = (List<Image>) imageService.findAll();
+        if (images.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        MultipartFile[] files = image.getFiles();
-        List<File> uploadedFiles = new ArrayList<File>();
-        List<String> failedFiles = new ArrayList<String>();
-
-        for (MultipartFile fileData : files) {
-// Tên file gốc tại Client.
-            String name = fileData.getOriginalFilename();
-            System.out.println("Client File Name = " + name);
-
-            if (name != null && name.length() > 0) {
-                try {
-                    File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + name);
-
-                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-                    stream.write(fileData.getBytes());
-                    stream.close();
-                    uploadedFiles.add(serverFile);
-                    System.out.println("Write file: " + serverFile);
-                } catch (Exception e) {
-                    System.out.println("Error Write file: " + name);
-                    failedFiles.add(name);
-                }
-            }
-        }
-        model.addAttribute("description", description);
-        model.addAttribute("uploadedFiles", uploadedFiles);
-        model.addAttribute("failedFiles", failedFiles);
-        return "uploadResult";
+        return new ResponseEntity<>(images, HttpStatus.OK);
     }
+
+
 
 }
 

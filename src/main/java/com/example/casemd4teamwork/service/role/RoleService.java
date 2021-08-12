@@ -33,11 +33,7 @@ public class RoleService implements IRoleService {
         roleRepository.deleteById(id);
     }
 
-    @Override
-    public Page<User> findAll(Pageable pageable) {
-        return null;
-    }
-
+ 
     @Override
     public Role findByName(String name) {
         return roleRepository.findByName(name);

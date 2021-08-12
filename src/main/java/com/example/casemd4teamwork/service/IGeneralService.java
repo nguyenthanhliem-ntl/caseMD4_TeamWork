@@ -16,5 +16,4 @@ public interface IGeneralService <T>{
 
     void remove(Long id);
 
-    Page<User> findAll(Pageable pageable);
 }

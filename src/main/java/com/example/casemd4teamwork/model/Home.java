@@ -1,7 +1,9 @@
 package com.example.casemd4teamwork.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.util.List;
+
 
 @Entity
 @Table(name = "home")
@@ -12,7 +14,7 @@ public class Home {
 
     private String home_Name;
 
-    private String type_Room;
+    private  String type_Room;
 
     private String type_Home;
 
@@ -29,8 +31,9 @@ public class Home {
     public Home() {
     }
 
-    @ManyToOne
-    @JoinColumn(name = "status_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "home_id")
+    @JsonIgnore
     private Status status;
 
     public Status getStatus() {

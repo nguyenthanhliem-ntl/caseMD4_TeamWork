@@ -7,5 +7,4 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.User;
 
 public interface IHomeService extends IGeneralService<Home> {
-    Page<User> findAllByFirstNameContaining(String firstname, Pageable pageable);
 }

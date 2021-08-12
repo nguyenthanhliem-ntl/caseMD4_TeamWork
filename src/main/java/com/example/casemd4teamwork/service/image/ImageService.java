@@ -36,8 +36,5 @@ public class ImageService implements IImageService{
 
     }
 
-    @Override
-    public Page<User> findAll(Pageable pageable) {
-        return null;
-    }
+
 }

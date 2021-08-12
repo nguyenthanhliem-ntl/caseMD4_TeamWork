@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>List Home</title>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript">
+
+    function addNewHome(){
+      let home_Name = $('#home_Name').val();
+      let type_Room = $('#type_Room').val();
+      let type_Home = $('#type_Home').val();
+      let address = $('#address').val();
+      let num_Bedroom = $('#num_Bedroom').val();
+      let num_Bathroom = $('#num_Bathroom').val();
+      let description = $('#descripyion').val();
+      let price = $('#price').val();
+      let status = $('#status').val();
+      let newHome = {
+        home_Name: home_Name,
+        type_Home:type_Home,
+        type_Room:type_Room,
+        address:address,
+        num_Bedroom:num_Bedroom,
+        num_Bathroom:num_Bathroom,
+        description:description,
+        price:price,
+        status:status
+      };
+
+      $.ajax({
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        type: "POST",
+        data: JSON.stringify(newHome),
+        url:"/api/homes",
+        success:console.log("success")
+      });
+      event.preventDefault();
+    }
+
+    function getHome(home) {
+      return `<tr><td >${home.home_Name}</td><td >${home.type_Home}</td><td >${home.type_Room}</td><td >${home.address}</td><td >${home.num_Bedroom}</td><td >${home.num_Bathroom}</td><td >${home.description}</td><td >${home.price}</td>` +
+              `<td><a class="deletehome" href="${home.id}">Delete</a></td></tr>`;
+    }
+    $(document).ready(function (){
+      $('.deleteHome').click(function (event){
+        let a = @(this);
+        let homeId = a.attr("href");
+        $.ajax({
+          type: "DELETE",
+          url: `/api/homes/${homeId}`,
+          success: function (data){
+            a.parent().parent().remove();
+          }
+        });
+        event.preventDefault();
+      });
+    })
+
+    function succesHandler(){
+      $.ajax({
+       type:"GET",
+       url: "/api/homes",
+        success:function (data) {
+         let content = ' <tr>\n'+
+                 ' <td>home_Name</td>\n'+
+                 ' <td>type_Home</td>\n'+
+                 ' <td>type_Room</td>\n'+
+                 ' <td>address</td>\n'+
+                 ' <td>num_Bedroom</td>\n'+
+                 ' <td>num_Bathroom</td>\n'+
+                 ' <td>description</td>\n'+
+                 ' <td>price</td>\n'+
+                 '</tr>';
+          for (let i = 0; i < data.length; i++) {
+            content += getHome(data[i]);
+          }
+          document.getElementById('homeList').innerHTML = content;
+        }
+
+      });
+    }
+  </script>
+</head>
+<body>
+<form id="add-home">
+  <table>
+    <tr>
+      <td>Tên nhà:</td>
+      <td><input type="text" id="home_Name" placeholder="tên nhà"></td>
+    </tr>
+    <tr>
+      <td>Kiểu phòng :</td>
+      <td><input type="text" id="type_room" placeholder="kiểu phòng"></td>
+    </tr>
+    <tr>
+      <td>Kiểu nhà :</td>
+      <td><input type="text" id="type_home" placeholder="kiểu nhà"></td>
+    </tr>
+    <tr>
+      <td>Địa chỉ :</td>
+      <td><input type="text" id="address" placeholder="địa chỉ"></td>
+    </tr>
+    <tr>
+      <td>Số phòng ngủ :</td>
+      <td><input type="text" id="num_bedroom" placeholder="số phòng ngủ"></td>
+    </tr>
+    <tr>
+      <td>Số phòng tắm :</td>
+      <td><input type="text" id="num_bathroom" placeholder="số phòng tắm"></td>
+    </tr>
+    <tr>
+      <td>Mô tả :</td>
+      <td><input type="text" id="desciption" placeholder="mô tả"></td>
+    </tr>
+    <tr>
+      <td>Giá phòng :</td>
+      <td><input type="text" id="price" placeholder="giá phòng"></td>
+    </tr>
+    <tr>
+     <td> <select>
+      <option>đã thuê</option>
+      <option>còn trống </option>
+      <option>đang sửa chữa</option>
+    </select></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><input type="submit" value="Thêm " onclick="addNewHome()"></td>
+    </tr>
+  </table>
+</form>
+<h1> Home List</h1>
+<table id ="homeList">
+  <tr>
+    <td>Name</td>
+    <td>type_Home</td>
+    <td>type_Room</td>
+    <td>address</td>
+    <td>num_Bedroom</td>
+    <td>num_Bathroom</td>
+    <td>description</td>
+    <td>price</td>
+    <td>status</td>
+  </tr>
+  <th:block th:each="home:${homes}">
+    <tr>
+      <td th:text="${home.name_Home}"></td>
+      <td th:text="${home.type_Home}"></td>
+      <td th:text="${home.type_Room}"></td>
+      <td th:text="${home.address}"></td>
+      <td th:text="${home.num_Bedroom}"></td>
+      <td th:text="${home.num_Bathroom}"></td>
+      <td th:text="${home.description}"></td>
+      <td th:text="${home.price}"></td>
+      <td th:text="${home.status}"></td>
+    </tr>
+  </th:block>
+</table>
+</body>
+</html>

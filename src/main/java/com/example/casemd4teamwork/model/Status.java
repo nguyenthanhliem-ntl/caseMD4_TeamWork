@@ -8,27 +8,27 @@ import java.util.List;
 public class Status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String name_status;
 
-    @OneToMany(targetEntity = Home.class)
+    @OneToMany(mappedBy = "status")
     private List<Home> home;
 
     public Status() {
     }
 
-    public Status(Integer id, String name_status, List<Home> home) {
+    public Status(Long id, String name_status, List<Home> home) {
         this.id = id;
         this.name_status = name_status;
         this.home = home;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

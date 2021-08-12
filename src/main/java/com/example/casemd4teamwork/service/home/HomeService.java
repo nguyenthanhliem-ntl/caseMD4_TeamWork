@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Service
 public  class HomeService implements IHomeService{
+
     @Autowired
     IHomeRepository homeRepository;
 
@@ -35,14 +36,6 @@ public  class HomeService implements IHomeService{
         homeRepository.deleteById(id);
     }
 
-    @Override
-    public Page<User> findAll(Pageable pageable) {
-        return null;
-    }
 
 
-    @Override
-    public Page<org.springframework.security.core.userdetails.User> findAllByFirstNameContaining(String firstname, Pageable pageable) {
-        return null;
-    }
 }

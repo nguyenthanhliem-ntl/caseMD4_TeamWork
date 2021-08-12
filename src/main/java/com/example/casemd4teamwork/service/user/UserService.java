@@ -42,10 +42,6 @@ public class UserService implements IUserService {
         userRepository.deleteById(id);
     }
 
-    @Override
-    public Page<User> findAll(Pageable pageable) {
-        return null;
-    }
 
     @Override
     public Optional<User> findByUserName(String username) {
@@ -61,8 +57,4 @@ public class UserService implements IUserService {
         return UserPrinciple.build(userOptional.get());
     }
 
-//    @Override
-//    public Page<User> findAllByFirstNameContaining(String username, Pageable pageable) {
-//        return userRepository.findAllByFirstNameContaining(username, pageable);
-//    }
 }
