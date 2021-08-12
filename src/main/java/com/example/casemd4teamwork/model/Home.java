@@ -28,6 +28,7 @@ public class Home {
 
     private Long price;
 
+
     public Home() {
     }
 
@@ -154,4 +155,5 @@ public class Home {
     public void setPrice(Long price) {
         this.price = price;
     }
+    //avcgit
 }

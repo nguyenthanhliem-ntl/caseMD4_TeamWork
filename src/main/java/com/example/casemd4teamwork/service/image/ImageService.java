@@ -1,5 +1,6 @@
 package com.example.casemd4teamwork.service.image;
 
+import com.example.casemd4teamwork.model.Home;
 import com.example.casemd4teamwork.model.Image;
 import com.example.casemd4teamwork.model.User;
 import com.example.casemd4teamwork.repository.IImageRepository;
@@ -36,5 +37,22 @@ public class ImageService implements IImageService{
 
     }
 
+<<<<<<< HEAD
+=======
+    @Override
+    public Iterable<Image> findAllByImageAddress(String address) {
+        return imageRepository.findAllByImageAddress(address);
+    }
+
+    @Override
+    public Iterable<Image> findAllByImagePrice(Long price1, Long price2) {
+        return imageRepository.findAllByImagePrice(price1, price2);
+    }
+
+    @Override
+    public Iterable<Image> findByImageHome(Long price1, Long price2, String address, int num_Bedroom, int num_Bathroom) {
+        return imageRepository.findByImageHome(price1, price2, address, num_Bedroom, num_Bathroom);
+    }
+>>>>>>> 36dc207e7fd75a92d0c74656555ae868e27bff4f
 
 }

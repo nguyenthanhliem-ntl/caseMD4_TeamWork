@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function addNewHome() {
+            let home_name = $('#home_name').val();
+            let type_room = $('#type_room').val();
+            let type_home = $('#type_home').val();
+            let address = $('#address').val();
+            let description = $('#description').val();
+            let num_Bedroom = $('#num_Bedroom').val();
+            let num_Bathroom = $('#num_Bathroom').val();
+            let price = $('#price').val();
+            let newHome = {
+                home_Name: home_name,
+                type_Room: type_room,
+                type_Home: type_home,
+                address : address ,
+                description: description,
+                num_Bedroom: num_Bedroom,
+                num_Bathroom: num_Bathroom,
+                price: price
+            };
+
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "POST",
+                data: JSON.stringify(newHome),
+                url: "http://localhost:8011/api/homes",
+                success: findAll
+            });
+            event.preventDefault();
+        };
+        function findAll() {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8011/api/homes",
+                success: function (data) {
+                    let content = '   <table class="table table-striped"><tr>\n' +
+                        '        <td>Home_name</td>\n' +
+                        '        <td>Type_home</td>\n' +
+                        '        <td>Type_room</td>\n' +
+                        '        <td>address</td>\n' +
+                        '        <td>num_bedroom</td>\n' +
+                        '        <td>num_bathroom</td>\n' +
+                        '        <td>description</td>\n' +
+                        '        <td>Price</td>\n' +
+                        '    </tr>';
+                    for (let i = 0; i < data.length; i++) {
+                        content += getHomes(data[i]);
+                    }
+                    content += "</table>";
+                    document.getElementById('main').innerHTML = content;
+                }
+            });
+        }
+
+        function getHomes(home) {
+            return `<tr><td >${home.home_Name}</td><td>${home.type_Home}</td><td >${home.type_Room}</td><td>${home.address}</td><td>${home.num_Bathroom}</td><td>${home.num_Bedroom}</td><td>${home.description}</td><td>${home.price}</td>` +
+                `<td><a class="btn btn-danger" onclick="deleteHome(${home.id})" >Delete</a></td><td><a class="btn btn-warning" onclick="edit(${home.id})" >Edit</a></td></tr>`;
+        }
+        function showFormCreate() {
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "GET",
+                url: "http://localhost:8011/api/homes",
+                success: function (data) {
+                    let str = "";
+                    str += "<form id=\"add-home\">\n" +
+                        "    <table class='table table-striped'>\n" +
+                        "        <tr>\n" +
+                        "            <td>Home_name:</td>\n" +
+                        "            <td><input type=\"text\" id=\"home_name\" placeholder=\"Home_name\"></td>\n" +
+                        "        </tr>\n" +
+                        "        <tr>\n" +
+                        "            <td>Type_home:</td>\n" +
+                        "            <td><input type=\"text\" id=\"type_home\" placeholder=\"Type_home\"></td>\n" +
+                        "        </tr>\n" +
+                        "        <tr>\n" +
+                        "            <td>Type_room:</td>\n" +
+                        "            <td><input type=\"text\" id=\"type_room\" placeholder=\"Type_room\"></td>\n" +
+                        "        </tr>\n" +
+                        "        <tr>\n" +
+                        "            <td>address:</td>\n" +
+                        "            <td><input type=\"text\" id=\"address\" placeholder=\"address\"></td>\n" +
+                        "        </tr>\n" +
+                        "        <tr>\n" +
+                        "            <td>Description:</td>\n" +
+                        "            <td><input type=\"text\" id=\"description\" placeholder=\"description\"></td>\n" +
+                        "        </tr>\n" +
+                        "        <tr>\n" +
+                        "            <td>num_bedroom:</td>\n" +
+                        "            <td><input type=\"text\" id=\"num_bedroom\" placeholder=\"num_bedroom\"></td>\n" +
+                        "        </tr>\n" +
+                        "        <tr>\n" +
+                        "            <td>num_bathroom:</td>\n" +
+                        "            <td><input type=\"text\" id=\"num_bathroom\" placeholder=\"num_bathroom\"></td>\n" +
+                        "        </tr>\n" +
+                        "        <tr>\n" +
+                        "            <td>price:</td>\n" +
+                        "            <td><input type=\"text\" id=\"price\" placeholder=\"price\"></td>\n" +
+                        "        </tr>\n" +
+                        "        <tr>\n" +
+                        "            <td></td>\n" +
+                        "            <td><button class='btn btn-success' type=\"button\" onclick=\"addNewHome()\">SAVE</button></td>\n" +
+                        "        </tr>\n" +
+                        "    </table>\n" +
+                        "</form>";
+                    document.getElementById('main').innerHTML = str;
+                    // document.getElementById("create").innerHTML = "";
+                }
+            })
+        }
+        function deleteHome(id) {
+            let check = confirm("Are you sure to delete ??? ");
+            if(check == true){
+                $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    type: "DELETE",
+                    data: JSON.stringify(id),
+                    url: "http://localhost:8011/api/homes/" + id,
+                    success: findAll
+                })
+            }
+        }
+        function edit(id) {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8011/api/homes/" + id,
+                success: function (home) {
+                    let home_Name = home.home_Name;
+                    let type_Room = home.type_Room;
+                    let type_Home = home.type_Home;
+                    let address = home.address;
+                    let num_Bedroom = home.num_Bedroom;
+                    let num_Bathroom = home.num_Bathroom;
+                    let description = home.description;
+                    let price = home.price;
+                    console.log(home_Name)
+                    let str = `<input type="hidden" id="id" value="${id}"><table class='table table-dark table-striped'>
+                            <tr>
+                                <td>home_Name :</td>
+                                <td><input type="text" id="home_Name" value="`+home_Name+`"></td>
+                           </tr>
+                           <tr>
+                               <td>type_Room</td>
+                               <td><input type="text" id="type_Room" value="${type_Room}"></td>
+                            </tr>
+                           <tr>
+                            <tr>
+                               <td>type_Home</td>
+                               <td><input type="text" id="type_Home" value="${type_Home}"></td>
+                            </tr>
+                           <tr> <tr>
+                               <td>address</td>
+                               <td><input type="text" id="address" value="${address}"></td>
+                            </tr>
+                            <tr> <tr>
+                               <td>num_Bathroom</td>
+                               <td><input type="text" id="num_Bathroom" value="${num_Bathroom}"></td>
+                            </tr>
+                           <tr> <tr>
+                               <td>num_Bedroom</td>
+                               <td><input type="text" id="num_Bedroom" value="${num_Bedroom}"></td>
+                            </tr>
+                            <tr> <tr>
+                               <td>description</td>
+                               <td><input type="text" id="description" value="${description}"></td>
+                            </tr>
+                            <tr> <tr>
+                               <td>price</td>
+                               <td><input type="text" id="price" value="${price}"></td>
+                            </tr>
+                               <td><button type="button" id="save" onclick="editProduct()" >Save</td>
+                           </tr>
+                       </table>`;
+                    document.getElementById("main").innerHTML = str;
+                }
+            });
+            event.preventDefault();
+        }
+        function editProduct() {
+            let id = document.getElementById("id").value;
+            let home_Name = document.getElementById("home_Name").value;
+            let type_Room = document.getElementById("type_Room").value;
+            let type_Home = document.getElementById("type_Home").value;
+            let address = document.getElementById("address").value;
+            let num_Bathroom = document.getElementById("num_Bathroom").value;
+            let num_Bedroom = document.getElementById("num_Bedroom").value;
+            let description = document.getElementById("description").value;
+            let price = document.getElementById("price").value;
+            let home = {
+                "home_Name": home_Name,
+                "type_Room": type_Room,
+                "type_Home": type_Home,
+                "address": address,
+                "num_Bathroom": num_Bathroom,
+                "num_Bedroom": num_Bedroom,
+                "description": description,
+                "price": price
+            }
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json'
+                },
+                type: "PUT",
+                data: JSON.stringify(home),
+                url: "http://localhost:8011/api/homes/" +id,
+                success: findAll
+            })
+            event.preventDefault();
+        }
+        function searchHomeByAddress() {
+            let address = $('#addressSearch');
+            let value = address.val();
+
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8011/api/homes/search/' + value,
+                success: function (homeList) {
+                    let str =
+                        "<h1 style='margin-left: 30%'>List Home</h1>" +
+                        "<table class='table table-dark table-striped'>\n" + "<tr>\n" +
+                        "<th>home_Name</th>\n" +
+                        "<th>type_Room</th>\n" +
+                        "<th>type_Home</th>\n" +
+                        "<th>address</th>\n" +
+                        "<th>num_Bedroom</th>\n" +
+                        "<th>num_Bathroom</th>\n" +
+                        "<th>description</th>\n" +
+                        "<th>price</th>\n" +
+                        "<th>Edit</th>\n" +
+                        "<th>Delete</th>\n" +
+                        "</tr>\n";
+                    console.log(homeList)
+                    for (let i = 0; i < homeList.length; i++) {
+                        str += "<tr><td>" + homeList[i].home_Name;
+                        str += "</td><td>" + homeList[i].type_Room;
+                        str += "</td><td>" + homeList[i].type_Home;
+                        str += "</td><td>" + homeList[i].address;
+                        str += "</td><td>" + homeList[i].num_Bathroom;
+                        str += "</td><td>" + homeList[i].num_Bedroom;
+                        str += "</td><td>" + homeList[i].description;
+                        str += "</td><td>" + homeList[i].price;
+                        str += "</td><td>" + '<button type="button" onclick="edit(' + homeList[i].id + ')"> Edit </button> ';
+                        str += "</td><td>" + ' <button  type="button" onclick="deleteHome(' + homeList[i].id + ')"> Delete</button> ';
+                        str += "</td>"
+                    }
+                    str += "</table>"
+                    document.getElementById('main').innerHTML = str;
+                }
+            })
+            event.preventDefault();
+        }
+        function searchHomeByPrice() {
+            let price1 = $('#addpriceSearch1');
+            let price2 = $('#addpriceSearch2');
+            let value1 = price1.val();
+            let value2 = price2.val();
+
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8011/api/homes/find/' + value1 +","+value2,
+                success: function (homeList) {
+                    let str =
+                        "<h1 style='margin-left: 30%'>List Home</h1>" +
+                        "<table class='table table-dark table-striped'>\n" + "<tr>\n" +
+                        "<th>home_Name</th>\n" +
+                        "<th>type_Room</th>\n" +
+                        "<th>type_Home</th>\n" +
+                        "<th>address</th>\n" +
+                        "<th>num_Bedroom</th>\n" +
+                        "<th>num_Bathroom</th>\n" +
+                        "<th>description</th>\n" +
+                        "<th>price</th>\n" +
+                        "<th>Edit</th>\n" +
+                        "<th>Delete</th>\n" +
+                        "</tr>\n";
+                    console.log(homeList)
+                    for (let i = 0; i < homeList.length; i++) {
+                        str += "<tr><td>" + homeList[i].home_Name;
+                        str += "</td><td>" + homeList[i].type_Room;
+                        str += "</td><td>" + homeList[i].type_Home;
+                        str += "</td><td>" + homeList[i].address;
+                        str += "</td><td>" + homeList[i].num_Bathroom;
+                        str += "</td><td>" + homeList[i].num_Bedroom;
+                        str += "</td><td>" + homeList[i].description;
+                        str += "</td><td>" + homeList[i].price;
+                        str += "</td><td>" + '<button type="button" onclick="edit(' + homeList[i].id + ')"> Edit </button> ';
+                        str += "</td><td>" + ' <button  type="button" onclick="deleteHome(' + homeList[i].id + ')"> Delete</button> ';
+                        str += "</td>"
+                    }
+                    str += "</table>"
+                    document.getElementById('main').innerHTML = str;
+                }
+            })
+            event.preventDefault();
+        }
+        function searchHome() {
+            let price1 = $('#pricemin');
+            let price2 = $('#pricemax');
+            let address = $('#address');
+            let num_bedroom = $('#num_bedroom');
+            let num_bathroom = $('#num_bathroom');
+            let value1 = price1.val();
+            let value2 = price2.val();
+            let value3 = address.val();
+            let value4 = num_bedroom.val();
+            let value5 = num_bathroom.val();
+
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8011/api/homes/tim/' + value1 +","+value2 +"," + value3 +","+value4 +"," +value5,
+                success: function (homeList) {
+                    let str =
+                        "<h1 style='margin-left: 30%'>List Home</h1>" +
+                        "<table class='table table-dark table-striped'>\n" + "<tr>\n" +
+                        "<th>home_Name</th>\n" +
+                        "<th>type_Room</th>\n" +
+                        "<th>type_Home</th>\n" +
+                        "<th>address</th>\n" +
+                        "<th>num_Bedroom</th>\n" +
+                        "<th>num_Bathroom</th>\n" +
+                        "<th>description</th>\n" +
+                        "<th>price</th>\n" +
+                        "<th>Edit</th>\n" +
+                        "<th>Delete</th>\n" +
+                        "</tr>\n";
+                    console.log(homeList)
+                    for (let i = 0; i < homeList.length; i++) {
+                        str += "<tr><td>" + homeList[i].home_Name;
+                        str += "</td><td>" + homeList[i].type_Room;
+                        str += "</td><td>" + homeList[i].type_Home;
+                        str += "</td><td>" + homeList[i].address;
+                        str += "</td><td>" + homeList[i].num_Bathroom;
+                        str += "</td><td>" + homeList[i].num_Bedroom;
+                        str += "</td><td>" + homeList[i].description;
+                        str += "</td><td>" + homeList[i].price;
+                        str += "</td><td>" + '<button type="button" onclick="edit(' + homeList[i].id + ')"> Edit </button> ';
+                        str += "</td><td>" + ' <button  type="button" onclick="deleteHome(' + homeList[i].id + ')"> Delete</button> ';
+                        str += "</td>"
+                    }
+                    str += "</table>"
+                    document.getElementById('main').innerHTML = str;
+                }
+            })
+            event.preventDefault();
+        }
+    </script>
+</head>
+<body onload="findAll()">
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-4">
+            <div id="create">
+                <button class="btn btn-success" onclick="showFormCreate()" type="button">AddNewHome</button>
+            </div>
+
+        </div>
+        <div class="col-4">
+            <button class="btn btn-primary" type="button" onclick="searchHomeByAddress()">Search</button>
+            <input id="addressSearch" type="text" value="address"></div>
+        <div class="col-4"><button class="btn btn-primary" onclick="findAll()">HOME</button></div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-primary" type="button" onclick="searchHomeByPrice()">SearchByPrice</button>
+            <input id="addpriceSearch1" type="text" value="pricemin">
+            <input id="addpriceSearch2" type="text" value="pricemax">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-primary" type="button" onclick="searchHome()">SearchHome</button>
+            <input id="pricemin" type="text" value="pricemin">
+            <input id="pricemax" type="text" value="pricemax">
+            <input id="address" type="text" value="address">
+            <input id="num_bedroom" type="text" value="num_bedroom">
+            <input id="num_bathroom" type="text" value="num_bathrooom">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div id="main"></div>
+        </div>
+    </div>
+
+    <div class="row"></div>
+
+</div>
+
+</body>
+</html>

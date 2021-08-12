@@ -36,6 +36,23 @@ public  class HomeService implements IHomeService{
         homeRepository.deleteById(id);
     }
 
+<<<<<<< HEAD
 
 
+=======
+    @Override
+    public Iterable<Home> findAllByAddress(String address) {
+        return homeRepository.findAllByAddress(address);
+    }
+
+    @Override
+    public Iterable<Home> findAllByPrice(Long price1, Long price2) {
+        return homeRepository.findAllByPrice(price1, price2);
+    }
+
+    @Override
+    public Iterable<Home> findByHome(Long price1, Long price2, String address, int num_Bedroom, int num_Bathroom) {
+        return homeRepository.findByHome(price1, price2, address, num_Bedroom, num_Bathroom);
+    }
+>>>>>>> 36dc207e7fd75a92d0c74656555ae868e27bff4f
 }

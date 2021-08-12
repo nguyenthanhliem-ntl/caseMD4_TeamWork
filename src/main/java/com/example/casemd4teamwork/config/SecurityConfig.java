@@ -61,6 +61,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/api/register","/api/sendEmail/{email}","/api/login").permitAll()
 //                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 //                .antMatchers("/user/**").access("hasRole('ROLE_USER')")
+
+                .antMatchers("/**", "/api/**").permitAll()
+
+
                 .anyRequest().authenticated()
                 .and().csrf().disable();
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

@@ -66,7 +66,22 @@ public class HomeController {
         homeService.remove(id);
         return new ResponseEntity<>(home.get(), HttpStatus.NO_CONTENT);
     }
+<<<<<<< HEAD
 
 
 
+=======
+    @GetMapping("/search/{value}")
+    public ResponseEntity<Iterable<Home>> findByAllAdress(@PathVariable String value) {
+        return new ResponseEntity<>(homeService.findAllByAddress("%" + value + "%"), HttpStatus.OK);
+    }
+    @GetMapping("/find/{price1},{price2}")
+    public ResponseEntity<Iterable<Home>> findAllByPrice(@PathVariable Long price1, @PathVariable Long price2) {
+        return new ResponseEntity<>(homeService.findAllByPrice(price1, price2), HttpStatus.OK);
+    }
+    @GetMapping("/tim/{price1},{price2},{address},{num_Bedroom},{num_Bathroom}")
+    public ResponseEntity<Iterable<Home>> findAllByHome(@PathVariable Long price1, @PathVariable Long price2, @PathVariable String address, @PathVariable int num_Bedroom, @PathVariable int num_Bathroom) {
+        return new ResponseEntity<>(homeService.findByHome(price1, price2,"%" + address + "%", num_Bedroom, num_Bathroom), HttpStatus.OK);
+    }
+>>>>>>> 36dc207e7fd75a92d0c74656555ae868e27bff4f
 }
