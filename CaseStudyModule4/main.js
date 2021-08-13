@@ -202,6 +202,7 @@ function orderHome() {
             url: "http://localhost:8080/order/create",
             success: function (){
                 window.location.href="home.html"
+                alert("Đặt phòng thành công :))")
             }
         });
         event.preventDefault();
